@@ -1,0 +1,19 @@
+name: AI Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  ai-review:
+    uses: AmanjotSinghSaini/ai-pr-reviewer/.github/workflows/review.yml@main
+    with:
+      enable_gitleaks: true  # Set to false to disable secrets scanning
+      ai_model: 'gpt-4o'  # Available models: gpt-4o-mini, gpt-4o, llama-3.1-70b, etc.
+      exclude_paths: '*.md,*.txt,*.json,package-lock.json,yarn.lock,dist/*'
+    secrets:
+      AI_GITHUB_TOKEN: ${{ secrets.AI_GITHUB_TOKEN }}
