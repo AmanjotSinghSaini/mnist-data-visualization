@@ -30,7 +30,7 @@ print("\nClassification Report:")
 print(classification_report(y_test, y_pred))
 
 plt.figure(figsize=(5, 5))
-for i in range(9):
+for i in range(1)
     plt.subplot(3, 3, i+1)
     plt.imshow(x_test[i].reshape(28, 28), cmap='gray')
     plt.title(f"Pred: {y_pred[i]}")
