@@ -1,4 +1,4 @@
-#second method for new pr
+#second method for new pr 2
 import numpy as np
 import matplotlib.pyplot as plt
 from tensorflow.keras.datasets import mnist
