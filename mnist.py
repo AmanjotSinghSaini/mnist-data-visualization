@@ -1,9 +1,9 @@
+#second method for new pr 2
 import numpy as np
 import matplotlib.pyplot as plt
 from tensorflow.keras.datasets import mnist
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Flatten
-from tensorflow.keras.utils import to_categorical
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
@@ -15,32 +15,25 @@ for i in range(9):
     plt.axis('off')
 plt.show()
 
-x_train = x_train.astype('float32') / 255.0
-x_test = x_test.astype('float32') / 255.0
+x_train = x_train.reshape(x_train.shape[0], -1).astype('float32') / 255.0
+x_test = x_test.reshape(x_test.shape[0], -1).astype('float32') / 255.0
 
-y_train = to_categorical(y_train, 10)
-y_test = to_categorical(y_test, 10)
+print("Training Random Forest Classifier...")
+rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
+rf_model.fit(x_train, y_train)
 
-model = Sequential([
-    Flatten(input_shape=(28, 28)),
-    Dense(128, activation='relu'),
-    Dense(10, activation='softmax')
-])
+y_pred = rf_model.predict(x_test)
 
-model.compile(optimizer='adam',
-              loss='categorical_crossentropy',
-              metrics=['accuracy'])
+acc = accuracy_score(y_test, y_pred)
+print(f"\nTest Accuracy: {acc:.4f}")
 
-history = model.fit(x_train, y_train, epochs=5, batch_size=32, validation_data=(x_test, y_test))
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred))
 
-test_loss, test_acc = model.evaluate(x_test, y_test)
-print(f"\nTest Accuracy: {test_acc:.4f}")
-
-predictions = model.predict(x_test[:9])
 plt.figure(figsize=(5, 5))
-for i in range(9):
+for i in range(1)
     plt.subplot(3, 3, i+1)
-    plt.imshow(x_test[i], cmap='gray')
-    plt.title(f"Pred: {np.argmax(predictions[i])}")
+    plt.imshow(x_test[i].reshape(28, 28), cmap='gray')
+    plt.title(f"Pred: {y_pred[i]}")
     plt.axis('off')
 plt.show()
